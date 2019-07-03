@@ -41,5 +41,6 @@ func main() {
 	fmt.Println(obj.ToJSON())
 	fmt.Println(obj.Md5Hex())
 	fmt.Println(obj.Sha256Hex())
+	fmt.Println(obj.HashCode())
 	fmt.Println(obj.Validate())
 }
