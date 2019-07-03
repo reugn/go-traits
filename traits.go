@@ -6,6 +6,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
+	"hash/fnv"
 	"reflect"
 	"runtime"
 	"strings"
@@ -36,6 +37,7 @@ type hash interface {
 	Md5Hex() string
 	Sha256() [32]byte
 	Sha256Hex() string
+	HashCode() uint32
 	setHasher(i interface{})
 }
 
@@ -152,6 +154,14 @@ func (h *Hash) Sha256() [32]byte {
 func (h *Hash) Sha256Hex() string {
 	sha256Bytes := h.Sha256()
 	return hex.EncodeToString(sha256Bytes[:])
+}
+
+// HashCode uint32 for self struct
+func (h *Hash) HashCode() uint32 {
+	jsonBytes, _ := json.Marshal(h.self)
+	h32 := fnv.New32a()
+	h32.Write(jsonBytes)
+	return h32.Sum32()
 }
 
 // Validator trait provides struct fields validation capability

@@ -29,6 +29,7 @@ func (t *Test) Bootstrap() {
 func (t *Test) Finalize() {
 	fmt.Println("Finalize Test struct...")
 }
+
 func TestTraits(t *testing.T) {
 	obj := Test{Num: 1, Str: "abc", Inn: Inner{make([]bool, 2)}}
 	traits.Init(&obj)
@@ -39,10 +40,12 @@ func TestTraits(t *testing.T) {
 
 	assertEqual(t, obj.Md5Hex(), "a2122caf3c968cc7dd87f7783fe0abe5")
 	assertEqual(t, obj.Sha256Hex(), "17a4d1650ec08d5466f6ded683c61b0becb597eaf3ba2f6a4f08dd44255ccb00")
+	assertEqual(t, obj.HashCode(), uint32(3850585125))
 
 	obj.Num = 200000
 	assertEqual(t, obj.Md5Hex(), "f42eaeaeb870fa47edbb8b236fa19d56")
 	assertEqual(t, obj.Sha256Hex(), "ec8bb3fb4147a81049e99f00f64aa191ccebf77a0f17adff1320b7fa227021cf")
+	assertEqual(t, obj.HashCode(), uint32(2161010274))
 
 	valid, _ := obj.Validate()
 	assertEqual(t, valid, false)
