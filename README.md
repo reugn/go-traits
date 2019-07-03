@@ -1,4 +1,7 @@
 # go-traits
+[![GoDoc](https://godoc.org/github.com/reugn/go-traits?status.svg)](https://godoc.org/github.com/reugn/go-traits)
+[![Go Report Card](https://goreportcard.com/badge/github.com/reugn/go-traits)](https://goreportcard.com/report/github.com/reugn/go-traits)
+
 Extend Go struct capabilities
 
 ## About
