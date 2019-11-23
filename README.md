@@ -12,6 +12,7 @@ Traits list:
 * traits.Jsonify - marshal struct to JSON
 * traits.Stringify - stringify struct
 * traits.Validator - validate struct fields
+* traits.Default - default fields initialization
 
 Hooks interfaces:  
 * traits.bootstrap - triggered on traits.Init()

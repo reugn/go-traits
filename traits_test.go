@@ -3,6 +3,7 @@ package traits_test
 import (
 	"encoding/json"
 	"fmt"
+	"reflect"
 	"testing"
 
 	"github.com/reugn/go-traits"
@@ -58,8 +59,39 @@ func TestTraits(t *testing.T) {
 	assertEqual(t, valid, true)
 }
 
+type TestDefault struct {
+	traits.Default
+	i    int
+	s    string
+	M    map[string]int
+	Ch   chan interface{}
+	Sl   []string
+	TPtr *Test
+}
+
+func TestTraitsDefault(t *testing.T) {
+	obj := TestDefault{}
+	traits.Init(&obj)
+
+	assertEqual(t, obj.i, 0)
+	assertEqual(t, obj.s, "")
+
+	assertNotNil(t, obj.M)
+	assertNotNil(t, obj.Ch)
+	if obj.Sl == nil {
+		t.Fatalf("%+v is nil", reflect.TypeOf(obj.Sl))
+	}
+	assertNotNil(t, obj.TPtr)
+}
+
 func assertEqual(t *testing.T, a interface{}, b interface{}) {
-	if a != b {
-		t.Fatalf("%s != %s", a, b)
+	if !reflect.DeepEqual(a, b) {
+		t.Fatalf("%v != %v", a, b)
+	}
+}
+
+func assertNotNil(t *testing.T, a interface{}) {
+	if a == nil || reflect.ValueOf(a) == reflect.Zero(reflect.TypeOf(a)) {
+		t.Fatalf("%+v is nil", reflect.TypeOf(a))
 	}
 }
