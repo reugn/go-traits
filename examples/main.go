@@ -6,41 +6,48 @@ import (
 	"github.com/reugn/go-traits"
 )
 
-type Inner struct {
+type inner struct {
 	Arr []bool
 }
 
-type Test struct {
-	traits.Hash
-	traits.Jsonify
-	traits.Stringify
+type test struct {
+	traits.Hasher
+	traits.Converter
+	traits.Stringer
 	traits.Validator
+
 	Num   int    `json:"num"`
 	Str   string `json:"str" valid:"numeric"`
-	Inn   *Inner
+	Inn   *inner
 	pstr  *string
 	C     chan interface{} `json:"-"`
 	Iface interface{}
 }
 
-func (t *Test) Bootstrap() {
+func (t *test) Bootstrap() {
 	fmt.Println("Bootstrap Test struct...")
 }
 
-func (t *Test) Finalize() {
+func (t *test) Finalize() {
 	fmt.Println("Finalize Test struct...")
 }
 
 func main() {
 	str := "bar"
-	obj := Test{Num: 1, Str: "abc", Inn: &Inner{make([]bool, 2)},
-		pstr: &str, C: make(chan interface{}), Iface: "foo"}
+	obj := test{
+		Num:   1,
+		Str:   "abc",
+		Inn:   &inner{make([]bool, 2)},
+		pstr:  &str,
+		C:     make(chan interface{}),
+		Iface: "foo",
+	}
 	traits.Init(&obj)
 
-	fmt.Println(obj.ToString())
+	fmt.Println(obj.String())
 	fmt.Println(obj.ToJSON())
 	fmt.Println(obj.Md5Hex())
 	fmt.Println(obj.Sha256Hex())
-	fmt.Println(obj.HashCode())
+	fmt.Println(obj.HashCode32())
 	fmt.Println(obj.Validate())
 }

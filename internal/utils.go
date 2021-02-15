@@ -1,7 +1,7 @@
 package internal
 
-// DeleteEmpty clears empty strings from a given slice
-// returns a new slice without modifying the original one
+// DeleteEmpty clears empty strings from the specified slice.
+// Returns a new slice without modifying the original one.
 func DeleteEmpty(s []string) []string {
 	var r []string
 	for _, str := range s {
@@ -10,4 +10,11 @@ func DeleteEmpty(s []string) []string {
 		}
 	}
 	return r
+}
+
+// Check the error and panic if not nil.
+func Check(e error) {
+	if e != nil {
+		panic(e)
+	}
 }
